@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RA 1. kolokvij</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<style>
+/* Postavitev: en viden pogled naenkrat. Domov so tri poti (teorija, zbirnik, računske naloge) kot vijugaste
+   poti po enotah; lekcija, vaja in naloga se odprejo kot ločen pogled. Zaobljene ploskve s 3D spodnjim robom. */
+:root{
+  --bg:#f7f5ff; --bar:#f1edff; --surface:#ffffff; --ink:#1c1838; --muted:#635e85; --line:#e3ddf6;
+  --blue:#6c4cf5; --blue-d:#5032d4; --blue-l:#eee9ff; --sky:#a99bff; --on-blue:#ffffff;
+  --u1:#6c4cf5; --u1-d:#5032d4; --u2:#2d7ff9; --u2-d:#1a5fd0; --u3:#e0458f; --u3-d:#b52c6f; --u4:#0f9fb3; --u4-d:#0a7a8a; --u5:#f08c00; --u5-d:#c46f00;
+  --grey:#ebe8f5; --grey-d:#cfc9e3; --grey-ink:#9c96b8;
+  --amber:#ffae1a; --amber-d:#b87400; --amber-l:#fff3dc;
+  --ok:#12b886; --ok-d:#0b8f68; --ok-l:#dcf7ee;
+  --bad:#ff5a6e; --bad-d:#d73c51; --bad-l:#ffe6ea;
+  --teal:#0fb3a3; --teal-l:#e0f7f4;
+  --code-bg:#fbfaff; --c-mn:#5032d4; --c-reg:#0a7a8a; --c-num:#c46f00; --c-str:#4f8a10; --c-lab:#b52c6f; --c-dir:#1a5fd0;
+  --f-display:"Nunito","Segoe UI",system-ui,sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --r:18px; --ease:cubic-bezier(.2,.9,.3,1.2); --lh:22px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f0c1f; --bar:#17132e; --surface:#1a1633; --ink:#ece9ff; --muted:#a39dc6; --line:#2e2852;
+  --blue:#8f75ff; --blue-d:#6a4fe0; --blue-l:#251d4d; --sky:#b9abff; --on-blue:#ffffff;
+  --u1:#8f75ff; --u1-d:#6a4fe0; --u2:#4b92ff; --u2-d:#2c69d6; --u3:#f0609f; --u3-d:#c8407c; --u4:#22b7cb; --u4-d:#14899a; --u5:#ffa53a; --u5-d:#d0801c;
+  --grey:#25203f; --grey-d:#363057; --grey-ink:#6f6992;
+  --amber:#ffbf47; --amber-d:#ffcf73; --amber-l:#33280f;
+  --ok:#34d399; --ok-d:#5fe0b0; --ok-l:#0f2f25;
+  --bad:#ff7487; --bad-d:#ff9aa8; --bad-l:#3a1620;
+  --teal:#2dd4bf; --teal-l:#0f2c2b;
+  --code-bg:#141029; --c-mn:#b9abff; --c-reg:#4fd6e6; --c-num:#ffbf47; --c-str:#9bd33a; --c-lab:#ff8fbd; --c-dir:#7fb2ff;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f0c1f; --bar:#17132e; --surface:#1a1633; --ink:#ece9ff; --muted:#a39dc6; --line:#2e2852;
+  --blue:#8f75ff; --blue-d:#6a4fe0; --blue-l:#251d4d; --sky:#b9abff; --on-blue:#ffffff;
+  --u1:#8f75ff; --u1-d:#6a4fe0; --u2:#4b92ff; --u2-d:#2c69d6; --u3:#f0609f; --u3-d:#c8407c; --u4:#22b7cb; --u4-d:#14899a; --u5:#ffa53a; --u5-d:#d0801c;
+  --grey:#25203f; --grey-d:#363057; --grey-ink:#6f6992;
+  --amber:#ffbf47; --amber-d:#ffcf73; --amber-l:#33280f;
+  --ok:#34d399; --ok-d:#5fe0b0; --ok-l:#0f2f25;
+  --bad:#ff7487; --bad-d:#ff9aa8; --bad-l:#3a1620;
+  --teal:#2dd4bf; --teal-l:#0f2c2b;
+  --code-bg:#141029; --c-mn:#b9abff; --c-reg:#4fd6e6; --c-num:#ffbf47; --c-str:#9bd33a; --c-lab:#ff8fbd; --c-dir:#7fb2ff;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;margin:0;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:980px;margin:0 auto;padding-left:16px;padding-right:16px}
+.wide{max-width:1120px}
+.narrow{max-width:820px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0;font-weight:900}
+h1{font-size:clamp(1.8rem,4.4vw,2.6rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.4rem,3.2vw,1.8rem)}
+h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--blue);font-weight:700;text-decoration-thickness:2px;text-underline-offset:3px}
+code,pre,.mono{font-family:var(--f-mono)}
+code{font-size:.86em;background:var(--blue-l);color:var(--ink);padding:1px 6px;border-radius:7px}
+.eyebrow{font-size:.76rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+svg.ico{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.ico.fill{fill:currentColor;stroke:none}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+
+/* ---------- zgornja vrstica ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:var(--bar);border-bottom:2px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:10px;min-height:60px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);margin-right:auto;min-width:0}
+.brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--blue);color:var(--on-blue);box-shadow:0 3px 0 var(--blue-d);flex:none}
+.brand b{display:block;font-weight:900;font-size:1.05rem;line-height:1.2}
+.brand small{display:block;color:var(--muted);font-weight:700;font-size:.74rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toplink{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:800;font-size:.9rem;text-decoration:none;padding:8px 10px;border-radius:12px}
+.toplink:hover,.tbtn:hover{background:var(--blue-l);color:var(--blue)}
+.tbtn,.iconbtn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;border:0;background:transparent;color:var(--muted);cursor:pointer;flex:none}
+.iconbtn{background:var(--surface);border:2px solid var(--line);box-shadow:0 3px 0 var(--line);text-decoration:none}
+.xp{display:inline-flex;align-items:center;gap:6px;font-weight:900;color:var(--amber-d);background:var(--amber-l);padding:5px 11px;border-radius:999px;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:.9rem}
+.xp svg{color:var(--amber)}
+.xp.bump{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.25)}}
+.ptrack{flex:1;height:14px;border-radius:999px;background:var(--grey);overflow:hidden}
+.ptrack i{display:block;height:100%;width:0;border-radius:999px;background:var(--ok);transition:width .5s var(--ease)}
+
+/* ---------- gumbi ---------- */
+.btn{--b:var(--blue);--bd:var(--blue-d);--bt:var(--on-blue);display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-size:.86rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--bt);background:var(--b);border:2px solid var(--b);border-radius:14px;padding:9px 16px;cursor:pointer;box-shadow:0 4px 0 var(--bd);transition:transform .08s ease,box-shadow .08s ease;user-select:none;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.btn:active:not(:disabled){transform:translateY(4px);box-shadow:0 0 0 var(--bd)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.light{--b:#fff;--bd:rgba(0,0,0,.2);--bt:#5032d4}
+.btn.ghost{--b:var(--surface);--bd:var(--line);--bt:var(--ink);border-color:var(--line)}
+.btn.ghost:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.btn.ok{--b:#12b886;--bd:#0b8f68;--bt:#fff}
+.btn.big{font-size:1rem;padding:13px 26px;border-radius:16px}
+.btn.sm{font-size:.74rem;padding:5px 10px;border-radius:10px;box-shadow:0 3px 0 var(--bd)}
+.btn.sm:active:not(:disabled){transform:translateY(3px)}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* ---------- domov ---------- */
+.hero{position:relative;overflow:hidden;margin-top:22px;border-radius:28px;padding:28px clamp(20px,4vw,40px);color:#fff;background:linear-gradient(135deg,#6c4cf5 0%,#e0458f 130%);box-shadow:0 8px 0 #5032d4;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.1);pointer-events:none}
+.hero::before{width:320px;height:320px;right:-90px;top:-130px}
+.hero::after{width:150px;height:150px;left:-60px;bottom:-70px}
+.hero > *{position:relative}
+.hero .eyebrow{color:inherit;opacity:.9}
+.hero-main{display:grid;gap:14px}
+.hero p{opacity:.95;max-width:58ch;font-weight:600}
+.hero-grid{position:absolute;inset:0;opacity:.13;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(80% 90% at 85% 30%,#000 0%,transparent 70%);mask-image:radial-gradient(80% 90% at 85% 30%,#000 0%,transparent 70%);pointer-events:none}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.facts span{font-size:.78rem;font-weight:800;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.18)}
+.cta-sub{font-size:.85rem;font-weight:700;opacity:.9}
+.ring{width:150px;height:150px;display:grid;place-items:center;position:relative}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14}
+.ring .rbg{stroke:rgba(255,255,255,.25)}
+.ring .rfg{stroke:#fff;stroke-linecap:round;transition:stroke-dashoffset 1s var(--ease)}
+.ring b{font-size:1.7rem;font-weight:900;line-height:1;text-align:center;font-variant-numeric:tabular-nums}
+.ring b small{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:800;opacity:.85;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:22px}
+.stat{display:flex;align-items:center;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:0 4px 0 var(--line)}
+.stat .si{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--blue-l);color:var(--blue);flex:none}
+.stat b{display:block;font-size:1.25rem;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat small{display:block;color:var(--muted);font-weight:700;font-size:.8rem;line-height:1.3}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:26px}
+.tab{display:grid;gap:1px;text-decoration:none;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 16px;box-shadow:0 4px 0 var(--line);min-width:0}
+.tab b{font-weight:900;line-height:1.25}
+.tab small{color:var(--muted);font-weight:700;font-size:.8rem;line-height:1.3}
+.tab:hover{border-color:var(--blue)}
+.tab.on{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blue-d)}
+.tab.on small{color:#fff;opacity:.9}
+.path{display:grid;gap:26px;margin-top:22px}
+.unit-head{--u:var(--u1);--ud:var(--u1-d);background:var(--u);color:#fff;border-radius:22px;padding:16px 22px;box-shadow:0 6px 0 var(--ud);display:flex;gap:16px;align-items:center;justify-content:space-between}
+.unit-head .eyebrow{color:inherit;opacity:.85}
+.unit-head h2{font-size:1.3rem;margin:2px 0}
+.unit-head p{opacity:.94;font-weight:600;font-size:.95rem;max-width:60ch}
+.uprog{font-weight:900;font-size:.85rem;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.22);white-space:nowrap}
+.nodes{display:grid;justify-items:center;gap:26px;padding:46px 0 8px;--zz:1}
+.nrow{display:grid;justify-items:center;gap:8px;transform:translateX(calc(var(--x,0) * var(--zz) * 1px));position:relative}
+.node{--u:var(--u1);--ud:var(--u1-d);position:relative;display:grid;place-items:center;width:78px;height:78px;border-radius:50%;text-decoration:none;font-weight:900;font-size:1.6rem;color:var(--grey-ink);background:var(--grey);box-shadow:0 7px 0 var(--grey-d);transition:transform .15s var(--ease),box-shadow .1s ease}
+.node:hover{transform:translateY(-2px)}
+.node:active{transform:translateY(7px);box-shadow:0 0 0 var(--grey-d)}
+.node.done{background:var(--u);color:#fff;box-shadow:0 7px 0 var(--ud)}
+.node.cur{background:var(--u);color:#fff;box-shadow:0 7px 0 var(--ud),0 0 0 7px var(--bg),0 0 0 11px color-mix(in srgb,var(--u) 45%,transparent)}
+.node svg{width:34px;height:34px}
+.nlabel{text-align:center;font-weight:800;font-size:.92rem;line-height:1.25;max-width:200px}
+.nlabel small{display:block;color:var(--muted);font-weight:700;font-size:.76rem}
+.nrow.todo .nlabel{color:var(--muted)}
+.bubble{position:absolute;top:-38px;left:50%;transform:translateX(-50%);background:var(--surface);color:var(--blue);border:2px solid var(--line);border-radius:12px;padding:3px 12px;font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 3px 0 var(--line);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,-4px)}}
+footer{margin:44px 0 30px;padding-top:18px;border-top:2px solid var(--line);color:var(--muted);font-size:.85rem;font-weight:600;display:grid;gap:4px}
+
+/* ---------- skupno za lekcijo, vajo in nalogo ---------- */
+.ex-wrap{display:grid;gap:16px;padding-top:22px;padding-bottom:28px}
+.ex-head{display:grid;gap:8px}
+.ex-head .eyebrow{color:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-block;font-size:.72rem;font-weight:900;letter-spacing:.04em;padding:3px 10px;border-radius:999px;background:var(--surface);border:2px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.n{background:var(--amber-l);border-color:transparent;color:var(--amber-d)}
+.chip.okc{background:var(--ok-l);border-color:transparent;color:var(--ok-d)}
+.note{border-radius:var(--r);padding:16px 18px;border:2px solid;display:grid;gap:8px;font-weight:600}
+.note .tag{justify-self:start;font-size:.7rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;padding:2px 10px;border-radius:999px}
+.note.task{background:var(--blue-l);border-color:var(--blue);box-shadow:0 4px 0 var(--blue)}
+.note.task .tag{background:#6c4cf5}
+.note.know{background:var(--teal-l);border-color:var(--teal);box-shadow:0 4px 0 var(--teal)}
+.note.know .tag{background:#0b8f82}
+.prose{display:grid;gap:8px;min-width:0}
+.prose ul{margin:0;padding-left:1.2em;display:grid;gap:2px}
+.prose pre,.lesson pre,.dbody pre{margin:0;background:var(--code-bg);border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.8rem;line-height:1.55;overflow-x:auto}
+.prose table{border-collapse:collapse;font-size:.9rem;background:var(--surface);border-radius:12px;overflow:hidden}
+.prose th,.prose td{padding:4px 12px;border-bottom:2px solid var(--line);text-align:left}
+.prose th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.prose tr:last-child td{border-bottom:0}
+.note code,.prose table code{background:var(--surface)}
+.botbar{position:sticky;bottom:0;z-index:15;background:var(--bar);border-top:2px solid var(--line)}
+.botbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:64px}
+.botbar .eyebrow{text-align:center}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);box-shadow:0 4px 0 var(--line);min-width:0;overflow:hidden}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border-bottom:2px solid var(--line);min-height:44px}
+.ptitle{display:inline-flex;align-items:center;gap:7px;font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pbody{padding:10px 12px}
+
+/* ---------- lekcija ---------- */
+.lesson{display:grid;gap:16px;min-width:0;font-weight:600}
+h3.sec{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:1.2rem}
+h3.sec::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--blue);transform:rotate(45deg);flex:none}
+.lesson ul,.drill ul{margin:0;padding-left:1.3em;display:grid;gap:4px}
+.tw{overflow-x:auto;border:2px solid var(--line);border-radius:14px;background:var(--surface)}
+table.tt{width:100%;border-collapse:collapse;font-size:.92rem}
+table.tt th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:2px solid var(--line);white-space:nowrap}
+table.tt td{padding:8px 12px;border-bottom:2px solid var(--line);vertical-align:top}
+table.tt tr:last-child td{border-bottom:0}
+table.truth td,table.truth th{text-align:center;font-family:var(--f-mono)}
+table.truth tr.cur{background:var(--amber-l)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+.mini{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 14px;display:grid;gap:4px;align-content:start;box-shadow:0 4px 0 var(--line);font-size:.95rem}
+.mini b{font-weight:900;color:var(--blue)}
+.mini.c2 b{color:var(--u5-d)}.mini.c3 b{color:var(--u4)}.mini.c4 b{color:var(--u3)}
+.trap{background:var(--amber-l);border:2px solid var(--amber);border-radius:var(--r);padding:14px 16px;display:grid;gap:10px;box-shadow:0 4px 0 var(--amber)}
+.trap > b{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--amber-d);font-weight:900}
+.lesson ul.tf{list-style:none;padding:0;gap:10px}
+ul.tf li{display:grid;gap:1px;padding-left:36px;position:relative;font-weight:800}
+ul.tf li::before{position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:.8rem;font-weight:900}
+ul.tf li.da::before{content:"✓";background:#12b886}
+ul.tf li.ne::before{content:"✕";background:#ff5a6e}
+ul.tf em{font-style:normal;font-weight:600;font-size:.92rem;color:var(--muted)}
+ul.tf li.da em::before{content:"Drži. ";font-weight:800;color:var(--ok-d)}
+ul.tf li.ne em::before{content:"Ne drži. ";font-weight:800;color:var(--bad-d)}
+.widget{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:0 4px 0 var(--line);display:grid;gap:12px;min-width:0}
+.wg-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.wg-row.big{gap:12px}
+.tog{font:inherit;font-weight:800;font-size:.82rem;padding:5px 12px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.tog.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.bit{font:inherit;font-family:var(--f-mono);font-weight:600;font-size:.95rem;padding:8px 14px;border-radius:12px;border:2px solid var(--grey-d);background:var(--grey);color:var(--muted);cursor:pointer;box-shadow:0 3px 0 var(--grey-d)}
+.bit.on{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 3px 0 var(--blue-d)}
+.arrow{font-weight:900;color:var(--muted)}
+.lamp{font-family:var(--f-mono);font-weight:600;font-size:.95rem;padding:8px 14px;border-radius:12px;background:var(--grey);color:var(--muted)}
+.lamp.on{background:#ffae1a;color:#1c1838}
+.wg-note{color:var(--muted);font-size:.9rem;font-weight:600}
+.wg-out{display:grid;gap:8px;min-width:0}
+.fld{display:grid;gap:4px;font-size:.8rem;font-weight:800;color:var(--muted);min-width:0;flex:1 1 220px}
+.inp,.fld input[type=text],.fld select,.dfld input,.dfld select{font:inherit;font-size:1rem;font-weight:600;padding:9px 12px;border:2px solid var(--line);border-radius:12px;background:var(--code-bg);color:var(--ink);min-width:0;width:100%}
+.mono.inp,.fld input.mono,.dfld input{font-family:var(--f-mono);font-size:.95rem}
+.fld input[type=range]{width:100%;accent-color:var(--blue)}
+.kv{display:flex;gap:12px;align-items:baseline;justify-content:space-between;flex-wrap:wrap;padding:6px 10px;border-radius:10px;background:var(--code-bg);font-size:.9rem;min-width:0}
+.kv span{color:var(--muted);font-weight:700}
+.kv b{overflow-wrap:anywhere;text-align:right;font-weight:600;min-width:0}
+.kv.hl{background:var(--amber-l)}
+.cyc{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px}
+.cyc-col{display:grid;gap:6px;align-content:start}
+.bar{position:relative;height:30px;border-radius:10px;background:var(--grey);overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--sky);border-radius:10px;transition:width .2s ease}
+.bar.ok i{background:var(--ok)}
+.bar span{position:relative;line-height:30px;padding-left:10px;font-size:.82rem;font-weight:800;color:var(--ink)}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:.76rem;font-weight:800}
+.legend span{padding:1px 9px;border-radius:999px}
+.bitline{overflow-wrap:anywhere;font-size:.95rem;line-height:1.9;font-weight:600}
+.b-s,.b-e,.b-m{padding:1px 3px;border-radius:5px}
+.b-s{background:var(--bad-l);color:var(--bad-d)}.b-e{background:var(--amber-l);color:var(--amber-d)}.b-m{background:var(--blue-l);color:var(--blue)}
+ol.steps{margin:0;padding-left:1.4em;display:grid;gap:10px;font-weight:600;min-width:0}
+ol.steps li{min-width:0}
+ol.steps .tw{margin:6px 0}
+.quiz{display:grid;gap:14px}
+.qcard{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:10px;box-shadow:0 4px 0 var(--line)}
+.qcard .qq{font-weight:800}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;font-weight:700;text-align:left;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:0 3px 0 var(--line)}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--ok-l);border-color:var(--ok);color:var(--ok-d);box-shadow:0 3px 0 var(--ok)}
+.opt.wrong{background:var(--bad-l);border-color:var(--bad);color:var(--bad-d);box-shadow:0 3px 0 var(--bad)}
+.qwhy{font-weight:600;color:var(--muted);font-size:.92rem}
+.done-box{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:var(--r);background:var(--ok-l);color:var(--ok-d);font-weight:900;border:2px solid var(--ok)}
+
+/* ---------- računska naloga ---------- */
+.drill{display:grid;gap:16px;min-width:0;font-weight:600}
+.drill-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;padding:14px 16px}
+.dfld{display:grid;gap:4px;align-content:start;min-width:0}
+.dfld.wide{grid-column:1/-1}
+.dfld label{font-size:.8rem;font-weight:800;color:var(--muted)}
+.dfld .fb{font-size:.84rem;font-weight:700;min-height:1.3em;overflow-wrap:anywhere}
+.dfld.good input,.dfld.good select{border-color:var(--ok);background:var(--ok-l)}
+.dfld.wrong input,.dfld.wrong select{border-color:var(--bad);background:var(--bad-l)}
+.dfld.good .fb{color:var(--ok-d)}.dfld.wrong .fb{color:var(--bad-d)}
+.drill .toolbar{border-top:2px solid var(--line)}
+.custom{display:flex;flex-wrap:wrap;gap:10px;align-items:end;padding:14px 16px}
+
+/* ---------- vaja iz zbirnika ---------- */
+.bench{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}
+.machine{display:grid;gap:14px;min-width:0}
+.ed{display:grid;grid-template-columns:auto 1fr;background:var(--code-bg);overflow-x:auto;font-family:var(--f-mono);font-size:14px;line-height:var(--lh);min-height:calc(var(--lh) * 10 + 20px)}
+.gut{padding:10px 0;text-align:right;color:var(--grey-ink);user-select:none;border-right:2px solid var(--line);position:sticky;left:0;background:var(--code-bg);z-index:2}
+.gut div{padding:0 8px 0 10px;height:var(--lh);min-width:36px}
+.gut .cur{background:#ffae1a;color:#1c1838;font-weight:600}
+.gut .err{background:#ff5a6e;color:#fff;font-weight:600}
+.code-area{position:relative;min-width:max-content}
+.code-area pre,.code-area textarea{margin:0;padding:10px 12px;font:inherit;line-height:var(--lh);white-space:pre;tab-size:4;letter-spacing:0;border:0}
+.code-area pre{min-width:max-content;pointer-events:none;color:var(--ink)}
+.code-area pre .ln{height:var(--lh)}
+.code-area pre .ln.cur{background:var(--amber-l);box-shadow:0 0 0 100vmax var(--amber-l);clip-path:inset(0 -100vmax)}
+.code-area pre .ln.err{background:var(--bad-l);box-shadow:0 0 0 100vmax var(--bad-l);clip-path:inset(0 -100vmax)}
+.code-area textarea{position:absolute;inset:0;width:100%;height:100%;resize:none;background:transparent;color:transparent;caret-color:var(--ink);overflow:hidden;outline:none}
+.code-area textarea::selection{background:color-mix(in srgb,var(--blue) 30%,transparent)}
+.k-mn{color:var(--c-mn);font-weight:600}.k-reg{color:var(--c-reg)}.k-num{color:var(--c-num)}.k-str{color:var(--c-str)}.k-lab{color:var(--c-lab);font-weight:600}.k-dir{color:var(--c-dir)}.k-com{color:var(--muted);font-style:italic}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px}
+.toolbar .sp{flex:1}
+.kbd{font-size:.74rem;font-weight:700;color:var(--muted)}
+.msg{margin:0 12px 12px;padding:9px 12px;border-radius:12px;font-size:.9rem;font-weight:700}
+.msg > span{display:block;margin-top:3px}
+.msg.info{background:var(--blue-l);color:var(--ink)}
+.msg.bad{background:var(--bad-l);color:var(--bad-d)}
+.msg.good{background:var(--ok-l);color:var(--ok-d)}
+.msg b{font-weight:900}
+.msg button{font:inherit;font-weight:900;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;text-align:left}
+table.regs{width:100%;border-collapse:collapse;font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums}
+table.regs th{text-align:left;font-weight:600;color:var(--c-reg);padding:3px 8px 3px 12px;width:1%}
+table.regs td{padding:3px 8px}
+table.regs td.dec{text-align:right;color:var(--muted);padding-right:12px}
+table.regs td.hex{white-space:nowrap}
+table.regs .z{color:var(--grey-ink);font-weight:400}
+table.regs tr.chg{background:var(--amber-l)}
+table.regs tr.chg td.hex{font-weight:600}
+table.regs tr.sep th,table.regs tr.sep td{border-top:2px solid var(--line)}
+.flags{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;border-top:2px solid var(--line)}
+.flag{font-family:var(--f-mono);font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--grey);color:var(--grey-ink)}
+.flag.on{background:var(--blue);color:#fff}
+.flag.chg{box-shadow:0 0 0 3px var(--amber)}
+.rows{font-family:var(--f-mono);font-size:13px;display:grid}
+.rows .row{display:flex;gap:10px;align-items:baseline;padding:3px 12px;min-width:0}
+.rows .row.chg{background:var(--amber-l)}
+.rows .a{color:var(--grey-ink);flex:none}
+.rows .n{color:var(--c-lab);font-weight:600;flex:none}
+.rows .t{color:var(--grey-ink);flex:none;font-size:11px}
+.rows .v{min-width:0;overflow-wrap:anywhere}
+.rows .tagp{margin-left:auto;font-size:11px;font-weight:600;color:var(--blue);flex:none}
+.empty{padding:10px 12px;color:var(--muted);font-size:.85rem;font-weight:600}
+pre.out{margin:0;padding:10px 12px;font-size:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;min-height:42px;max-height:260px;overflow-y:auto}
+.stdin{display:grid;gap:4px;padding:10px 12px;border-bottom:2px solid var(--line);font-size:.78rem;font-weight:800;color:var(--muted)}
+.hintline{padding:8px 12px;border-top:2px solid var(--line);color:var(--muted);font-size:.78rem;font-weight:600;line-height:1.4}
+.tests ul{list-style:none;margin:0;padding:0}
+.tests li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-bottom:2px solid var(--line)}
+.tdot{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--grey);color:var(--grey-ink);flex:none;margin-top:1px}
+.tdot svg{width:16px;height:16px;stroke-width:3}
+li.pass .tdot{background:#12b886;color:#fff}
+li.fail .tdot{background:#ff5a6e;color:#fff}
+.tinfo{flex:1;min-width:0;display:grid;gap:1px;font-size:.92rem}
+.tinfo b{font-weight:900}
+.tinfo .mono{font-size:.8rem;overflow-wrap:anywhere}
+.tinfo .lbl{color:var(--muted);font-weight:700;font-family:var(--f-body);font-size:.8rem}
+.tinfo .got{color:var(--bad-d);font-weight:600}
+.tests .hintline{border-top:0}
+.win{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--ok-l);color:var(--ok-d);font-weight:900;border-top:2px solid var(--line)}
+.win span{display:inline-flex;align-items:center;gap:8px}
+details.more{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);box-shadow:0 4px 0 var(--line);overflow:hidden}
+details.more summary{cursor:pointer;padding:12px 16px;font-weight:900;font-size:.86rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary small{text-transform:none;letter-spacing:0;font-weight:700}
+details.more[open] summary{border-bottom:2px solid var(--line);color:var(--ink)}
+details.more .dbody{padding:14px 16px;display:grid;gap:12px;font-weight:600;min-width:0}
+details.more .dbody > pre{font-size:13px}
+
+/* ---------- švinglci ---------- */
+.cheat{display:grid;gap:18px;padding-top:22px;padding-bottom:40px}
+.cheat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr));gap:14px;align-items:start}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;box-shadow:0 4px 0 var(--line);min-width:0;overflow:hidden}
+.card h3{padding:12px 16px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:8px}
+.card h3::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--hc,var(--blue));transform:rotate(45deg);flex:none}
+.card .tw{border:0;border-radius:0}
+.card table{width:100%;border-collapse:collapse;font-size:.88rem}
+.card td,.card th{padding:6px 16px;border-bottom:2px solid var(--line);text-align:left;vertical-align:top}
+.card th{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.card tr:last-child td{border-bottom:0}
+.card td:first-child{white-space:nowrap}
+.card pre{margin:0;padding:12px 16px;font-size:13px;line-height:1.55;overflow-x:auto}
+.card p{padding:10px 16px;font-size:.9rem;font-weight:600;border-top:2px solid var(--line)}
+
+@media (max-width:860px){
+  .bench{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .hero{grid-template-columns:minmax(0,1fr);border-radius:22px}
+  .ring{display:none}
+  .nodes{--zz:.55}
+  .toplink span{display:none}
+  .brand small{display:none}
+  .ed{font-size:16px}
+  .unit-head{padding:14px 16px;border-radius:18px}
+  .kbd{display:none}
+  .botbar .btn span.t{display:none}
+  .tab{padding:10px 10px}
+  .tab small{display:none}
+  .tab b{font-size:.9rem}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4h13v15H6.5A1.5 1.5 0 0 0 5 20.5z"/><path d="M5 20.5V4M9 8h5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 7 7 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></symbol>
+  <symbol id="i-step" viewBox="0 0 24 24"><path d="M5 5v14l9-7z"/><path d="M18 5v14"/></symbol>
+  <symbol id="i-ff" viewBox="0 0 24 24"><path d="M4 5v14l8-7zM13 5v14l8-7z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v5h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.3 1 2.1h5c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-term" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10l3 2.5L7 15M13 15h4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16M4 15h16"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+</svg>
+
+<!-- ====================== POT ====================== -->
+<section id="v-pot" class="view">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#pot">
+        <span class="brand-mark"><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg></span>
+        <span><b>RA · 1. kolokvij</b><small>Računalniška arhitektura · teorija, zbirnik, računske naloge</small></span>
+      </a>
+      <a class="toplink" href="#peskovnik"><svg class="ico" aria-hidden="true"><use href="#i-term"/></svg><span>Peskovnik</span></a>
+      <a class="toplink" href="#svinglci"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Švinglci</span></a>
+      <button class="tbtn btnTheme" type="button" aria-label="Preklopi temno in svetlo temo"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <span class="xp" title="Zbrane točke"><svg class="ico fill" aria-hidden="true"><use href="#i-star"/></svg><span class="xpv">0</span></span>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-main">
+        <span class="eyebrow">FERI · Računalniška arhitektura</span>
+        <h1>Tvoja pot do 1. kolokvija iz RA</h1>
+        <p>Teorija po predavanjih, razložena preprosto in z interaktivnimi prikazi. Vaje iz zbirnika v NASM, ki jih pišeš in poganjaš kar tukaj. Računske naloge z novimi številkami ob vsakem kliku in postopkom reševanja.</p>
+        <div class="facts"><span id="factT">23 lekcij</span><span id="factV">16 vaj iz zbirnika</span><span id="factR">9 vrst računskih nalog</span><span>x86-64 · NASM · Ubuntu</span></div>
+        <div class="btnrow">
+          <a id="ctaBtn" class="btn light big" href="#pot">Začni</a>
+          <span id="ctaSub" class="cta-sub"></span>
+        </div>
+      </div>
+      <div class="ring">
+        <svg viewBox="0 0 150 150" aria-hidden="true"><circle class="rbg" cx="75" cy="75" r="61"/><circle id="ringFg" class="rfg" cx="75" cy="75" r="61" stroke-dasharray="383.3" stroke-dashoffset="383.3"/></svg>
+        <b id="ringTxt">0 %<small>opravljeno</small></b>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="si"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><div><b id="stT">0 / 23</b><small>predelanih lekcij</small></div></div>
+      <div class="stat"><span class="si"><svg class="ico" aria-hidden="true"><use href="#i-code"/></svg></span><div><b id="stV">0 / 16</b><small>rešenih vaj iz zbirnika</small></div></div>
+      <div class="stat"><span class="si"><svg class="ico" aria-hidden="true"><use href="#i-calc"/></svg></span><div><b id="stR">0</b><small>rešenih računskih nalog</small></div></div>
+      <div class="stat"><span class="si"><svg class="ico fill" aria-hidden="true"><use href="#i-star"/></svg></span><div><b id="stXp">0</b><small>zbranih točk XP</small></div></div>
+    </div>
+    <nav class="tabs" aria-label="Poglavja">
+      <a class="tab" id="tab-teorija" href="#teorija"><b>Teorija</b><small id="tabT">po predavanjih</small></a>
+      <a class="tab" id="tab-zbirnik" href="#zbirnik"><b>Zbirnik</b><small id="tabV">vaje v NASM</small></a>
+      <a class="tab" id="tab-racunske" href="#racunske"><b>Računske naloge</b><small id="tabR">IEEE 754, UTF-8 …</small></a>
+    </nav>
+    <div id="path" class="path"></div>
+    <footer>
+      <span>Napredek in tvoja koda se shranjujeta samo v tem brskalniku.</span>
+      <span>Teorija sledi prosojnicam predavanj 02 do 11. Videz je narejen po vzoru strani OS · 1. kolokvij.</span>
+    </footer>
+  </div>
+</section>
+
+<!-- ====================== LEKCIJA ====================== -->
+<section id="v-lekcija" class="view" hidden>
+  <header class="topbar">
+    <div class="wrap narrow">
+      <a class="iconbtn" href="#teorija" aria-label="Nazaj na pot"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></a>
+      <div class="ptrack" aria-hidden="true"><i id="lsFill"></i></div>
+      <button class="tbtn btnTheme" type="button" aria-label="Preklopi temno in svetlo temo"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <span class="xp"><svg class="ico fill" aria-hidden="true"><use href="#i-star"/></svg><span class="xpv">0</span></span>
+    </div>
+  </header>
+  <div class="wrap narrow ex-wrap">
+    <div class="ex-head">
+      <span class="eyebrow" id="lsEyebrow"></span>
+      <h1 id="lsTitle"></h1>
+      <div class="chips" id="lsChips"></div>
+    </div>
+    <article class="lesson" id="lsBody"></article>
+    <h3 class="sec">Preveri se</h3>
+    <div class="quiz" id="lsQuiz"></div>
+    <div class="done-box" id="lsDone" hidden></div>
+  </div>
+  <nav class="botbar" aria-label="Med lekcijami">
+    <div class="wrap narrow">
+      <a id="lsPrev" class="btn ghost" href="#teorija"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg><span class="t">Prejšnja</span></a>
+      <span class="eyebrow" id="lsPos"></span>
+      <a id="lsNext" class="btn" href="#teorija"><span class="t">Naslednja</span><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    </div>
+  </nav>
+</section>
+
+<!-- ====================== RAČUNSKA NALOGA ====================== -->
+<section id="v-racun" class="view" hidden>
+  <header class="topbar">
+    <div class="wrap narrow">
+      <a class="iconbtn" href="#racunske" aria-label="Nazaj na pot"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></a>
+      <div class="ptrack" aria-hidden="true"><i id="drFill"></i></div>
+      <button class="tbtn btnTheme" type="button" aria-label="Preklopi temno in svetlo temo"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <span class="xp"><svg class="ico fill" aria-hidden="true"><use href="#i-star"/></svg><span class="xpv">0</span></span>
+    </div>
+  </header>
+  <div class="wrap narrow ex-wrap">
+    <div class="ex-head">
+      <span class="eyebrow" id="drEyebrow"></span>
+      <h1 id="drTitle"></h1>
+      <div class="chips" id="drChips"></div>
+    </div>
+    <div class="drill" id="drPage" hidden></div>
+    <div class="drill" id="drTask">
+      <div class="note task"><span class="tag">Naloga</span><div class="prose"><p id="drQ"></p></div></div>
+      <div class="panel">
+        <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-calc"/></svg>Tvoj odgovor</span><span class="chip" id="drState">še ni preverjeno</span></div>
+        <form id="drForm" autocomplete="off">
+          <div class="drill-fields" id="drFields"></div>
+          <div class="toolbar">
+            <button class="btn ok" type="submit"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Preveri</span></button>
+            <button class="btn ghost" type="button" id="drNew"><svg class="ico" aria-hidden="true"><use href="#i-reset"/></svg><span>Nova naloga</span></button>
+          </div>
+        </form>
+      </div>
+      <details class="more" id="drSolBox"><summary><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg>Postopek reševanja</summary><div class="dbody" id="drSol"></div></details>
+      <div class="panel" id="drCustomBox">
+        <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg>Naloga z vaj ali kolokvija</span></div>
+        <form class="custom" id="drCustom" autocomplete="off">
+          <label class="fld"><span id="drCustomLbl"></span><input type="text" class="mono" id="drCustomIn"></label>
+          <button class="btn ghost" type="submit">Sestavi nalogo</button>
+        </form>
+        <div class="hintline" id="drCustomMsg">Vpiši svoje število in dobil boš nalogo s preverjanjem in postopkom.</div>
+      </div>
+    </div>
+  </div>
+  <nav class="botbar" aria-label="Med nalogami">
+    <div class="wrap narrow">
+      <a id="drPrev" class="btn ghost" href="#racunske"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg><span class="t">Prejšnja vrsta</span></a>
+      <span class="eyebrow" id="drPos"></span>
+      <a id="drNext" class="btn" href="#racunske"><span class="t">Naslednja vrsta</span><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    </div>
+  </nav>
+</section>
+
+<!-- ====================== VAJA IZ ZBIRNIKA ====================== -->
+<section id="v-vaja" class="view" hidden>
+  <header class="topbar">
+    <div class="wrap wide">
+      <a class="iconbtn" href="#zbirnik" aria-label="Nazaj na pot"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></a>
+      <div class="ptrack" aria-hidden="true"><i id="exFill"></i></div>
+      <button class="tbtn btnTheme" type="button" aria-label="Preklopi temno in svetlo temo"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <span class="xp"><svg class="ico fill" aria-hidden="true"><use href="#i-star"/></svg><span class="xpv">0</span></span>
+    </div>
+  </header>
+  <div class="wrap wide ex-wrap">
+    <div class="ex-head">
+      <span class="eyebrow" id="exEyebrow"></span>
+      <h1 id="exTitle"></h1>
+      <div class="chips" id="exChips"></div>
+    </div>
+    <div class="note task"><span class="tag">Naloga</span><div class="prose" id="exTask"></div></div>
+    <div class="note know"><span class="tag">Kaj rabiš</span><div class="prose" id="exTheory"></div></div>
+
+    <div class="bench">
+      <div class="panel">
+        <div class="phead">
+          <span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-code"/></svg>program.asm</span>
+          <button id="btnReset" class="btn ghost sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-reset"/></svg><span>Začetna koda</span></button>
+        </div>
+        <div class="ed">
+          <div class="gut" id="gut" aria-hidden="true"></div>
+          <div class="code-area">
+            <pre id="hl" aria-hidden="true"></pre>
+            <textarea id="code" aria-label="Urejevalnik kode v zbirniku" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button id="btnRun" class="btn ok" type="button"><svg class="ico fill" aria-hidden="true"><use href="#i-play"/></svg><span id="btnRunTxt">Zaženi teste</span></button>
+          <button id="btnStep" class="btn ghost" type="button"><svg class="ico" aria-hidden="true"><use href="#i-step"/></svg><span>Korak</span></button>
+          <button id="btnCont" class="btn ghost" type="button" hidden><svg class="ico" aria-hidden="true"><use href="#i-ff"/></svg><span>Do konca</span></button>
+          <button id="btnStop" class="btn ghost" type="button" hidden><svg class="ico" aria-hidden="true"><use href="#i-stop"/></svg><span>Ustavi</span></button>
+          <span class="sp"></span>
+          <span class="kbd">Ctrl + Enter zažene</span>
+        </div>
+        <div id="msg" class="msg info" role="status" hidden></div>
+      </div>
+
+      <div class="machine">
+        <div class="panel" id="outPanel">
+          <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-term"/></svg>Vhod in izhod</span><span class="chip" id="ioState"></span></div>
+          <label class="stdin"><span id="stdinLbl">Vhod programa (to, kar bi vtipkal za scanf)</span><input type="text" class="inp mono" id="stdin" autocomplete="off" spellcheck="false"></label>
+          <pre class="out mono" id="out"></pre>
+        </div>
+        <div class="panel">
+          <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>Registri</span><span class="chip" id="mState">začetno stanje</span></div>
+          <div id="regs"></div>
+          <div class="flags" id="flags"></div>
+          <div class="hintline" id="regNote"></div>
+        </div>
+        <div class="panel">
+          <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg>Sklad</span><span class="chip">raste navzdol</span></div>
+          <div id="stack"></div>
+        </div>
+        <div class="panel" id="memPanel">
+          <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-box"/></svg>Pomnilnik (.data)</span></div>
+          <div id="mem"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel tests" id="testsPanel">
+      <div class="phead"><span class="ptitle"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Testi</span><span class="chip" id="testSum"></span></div>
+      <ul id="tests"></ul>
+      <div class="hintline">Izpis se primerja po besedah: presledki in prazne vrstice niso pomembni, vrstni red in vrednosti pa so.</div>
+      <div class="win" id="win" hidden></div>
+    </div>
+
+    <details class="more" id="hintBox"><summary><svg class="ico" aria-hidden="true"><use href="#i-bulb"/></svg>Namig</summary><div class="dbody"><p id="exHint"></p></div></details>
+    <details class="more" id="solBox"><summary><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg>Rešitev <small id="solNote"></small></summary><div class="dbody"><pre id="exSol" class="mono"></pre><div class="btnrow"><button id="btnUseSol" class="btn ghost sm" type="button">Prepiši v urejevalnik</button></div></div></details>
+  </div>
+  <nav class="botbar" id="botbar" aria-label="Med vajami">
+    <div class="wrap wide">
+      <a id="navPrev" class="btn ghost" href="#zbirnik"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg><span class="t">Prejšnja</span></a>
+      <span class="eyebrow" id="navPos"></span>
+      <a id="navNext" class="btn" href="#zbirnik"><span class="t">Naslednja</span><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    </div>
+  </nav>
+</section>
+
+<!-- ====================== ŠVINGLCI ====================== -->
+<section id="v-svinglci" class="view" hidden>
+  <header class="topbar">
+    <div class="wrap wide">
+      <a class="iconbtn" href="#pot" aria-label="Nazaj na pot"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></a>
+      <a class="brand" href="#pot" style="margin-left:6px"><span><b>Švinglci</b><small>Zbirnik in formule na eni strani</small></span></a>
+      <a class="toplink" href="#peskovnik"><svg class="ico" aria-hidden="true"><use href="#i-term"/></svg><span>Peskovnik</span></a>
+      <button class="tbtn btnTheme" type="button" aria-label="Preklopi temno in svetlo temo"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+  <div class="wrap wide cheat">
+    <div class="ex-head"><span class="eyebrow">x86-64 · Linux · NASM · formule</span><h1>Švinglci</h1></div>
+    <div class="cheat-grid" id="cheat"></div>
+  </div>
+</section>
+
+<script src="emu.js"></script>
+<script src="vaje.js"></script>
+<script src="teorija.js"></script>
+<script src="orodja.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
